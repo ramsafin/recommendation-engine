@@ -1,0 +1,187 @@
+debug: false
+
+google:
+  client:
+    clientId: your client id
+    clientSecret: your client secret
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    clientAuthenticationScheme: form
+    scope:
+      - openid
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+    preferTokenInfo: true
+
+spring:
+
+  profiles:
+    active: dev, postgresql
+
+  thymeleaf:
+    enabled: true
+    encoding: UTF-8
+
+  dao:
+    exceptiontranslation:
+      enabled: true
+
+  data:
+
+    jpa:
+      repositories:
+        enabled: true
+
+    rest:
+      base-path: /api
+      default-page-size: 5
+      enable-enum-translation: true
+      max-page-size: 25
+      return-body-on-create: true
+      return-body-on-update: true
+      detection-strategy: annotated
+      page-param-name: page
+      sort-param-name: sort
+      limit-param-name: limit
+
+    neo4j:
+      embedded:
+        enabled: false
+
+
+  jpa:
+
+    show-sql: false
+    generate-ddl: true
+
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+
+    properties:
+      hibernate:
+        format_sql: false
+
+
+  datasource:
+    sql-script-encoding: UTF-8
+    initialize: false
+
+
+  transaction:
+    rollback-on-commit-failure: true
+    default-timeout: 30
+
+
+  http:
+
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+    encoding:
+      enabled: true
+      charset: UTF-8
+
+    converters:
+      preferred-json-mapper: jackson
+
+
+  jackson:
+
+    locale: ru_RU
+    time-zone: GMT+3
+    property-naming-strategy: LOWER_CASE
+
+    serialization:
+      fail-on-empty-beans: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+  mvc:
+
+    locale: ru_RU
+    dispatch-options-request: true
+    throw-exception-if-no-handler-found: true
+
+logging:
+  level:
+    org.springframework: WARN
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: WARN
+    ru.kpfu.itis.javaLab: DEBUG
+
+
+server:
+  error:
+    include-stacktrace: never
+
+    whitelabel:
+      enabled: false
+
+---
+
+######## dev profile ########
+
+trace: true
+
+spring:
+
+  profiles: dev
+
+  resources:
+    cache-period: 0
+
+  thymeleaf:
+    cache: false
+
+  jackson:
+    serialization:
+      indent_output: true
+
+  mvc:
+    favicon:
+      enabled: true
+
+---
+
+######## prod profile ########
+
+spring:
+
+  main:
+    banner-mode: off
+
+  thymeleaf:
+    cache: true
+
+  resources:
+    cache-period: 40
+
+  mvc:
+    favicon:
+      enabled: false
+
+---
+
+######## postgresql profile ########
+
+spring:
+
+  datasource:
+
+    name: yourDatasourceName
+    platform: postgresql
+    driver-class-name: org.postgresql.Driver
+
+    url: jdbc:postgresql://127.0.0.1:5432/your_db
+    username: username
+    password: verysecret
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

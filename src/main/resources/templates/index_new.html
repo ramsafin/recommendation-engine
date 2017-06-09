@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>Default home page</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}" media="screen,projection"/>
+
+</head>
+<body>
+
+<!-- navigation -->
+<header class="navbar-fixed">
+
+    <!--Login, Sign up dropdown-->
+    <ul id="auth-dropdown" class="dropdown-content">
+        <li>
+            <a href="#" th:href="@{/login}">
+                Login
+            </a>
+        </li>
+
+        <li>
+            <a href="#" th:href="@{/signup}">
+                Sign up
+            </a>
+        </li>
+    </ul>
+
+    <nav class="white" role="navigation">
+
+        <div class="nav-wrapper">
+
+            <a id="logo-container" href="#" class="brand-logo left">Beauty's right behind you</a>]
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+                <li><a href="#">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+
+                    <a class="dropdown-button" href="#!" data-activates="auth-dropdown">
+                        Auth<i class="material-icons right">arrow_drop_down</i>
+                    </a>
+
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li class="truncate">
+                    <a th:if="${user != null}" href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<!-- intro -->
+<div id="index-banner" class="parallax-container">
+
+    <div class="section no-pad-bot">
+
+        <div class="container">
+            <br/><br/>
+
+            <h1 class="header center teal-text">Nature blog</h1>
+
+            <div class="row center">
+                <h5 class="header col s12 light">Simple to read and unforgettable blog about beauty of nature</h5>
+            </div>
+
+            <div th:if="${user == null}" class="row center">
+                <a href="#" th:href="@{/login}" id="download-button"
+                   class="btn-large waves-effect waves-light teal lighten-1"><u>Log in</u> <strong>or</strong> <u>Sign
+                    up</u></a>
+            </div>
+
+            <div th:if="${user != null}" class="row center">
+                <a href="#" th:href="@{/blog}" id="download-button"
+                   class="btn-large waves-effect waves-light teal lighten-1">Read more</a>
+            </div>
+
+            <br/><br/>
+
+        </div>
+
+    </div>
+
+    <div class="parallax"><img src="" th:src="@{/images/background9.jpg}" alt=""/></div>
+
+</div>
+
+<!-- into 2-->
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">language</i></h2>
+                    <h5 class="center">All around the world</h5>
+
+                    <p class="light center">Can you imagine being in China, Chili or even Russia?! There're plenty of
+                        blog
+                        posts which will show you <strong>ALL</strong> you'd like to read.
+                        Hope, you'll enjoy!</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">hd</i><i
+                            class="material-icons">high_quality</i></h2>
+                    <h5 class="center">High resolution nature</h5>
+
+                    <p class="light center">All pictures are photographed by professionals. Wanna see something unusual,
+                        invisible to unaided eye?
+                        You'll never regret)</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">thumbs_up_down</i><i class="material-icons">comment</i>
+                    </h2>
+                    <h5 class="center">Share you opinion</h5>
+
+                    <p class="light center">Judgement is the part of developing, so feel free to speak out.
+                        Vote, write comments and offer how blog should keep improving. Don't be afraid...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="" th:src="@{/images/background2.jpg}" alt="Unsplashed background img 2"/></div>
+</div>
+
+<!-- contacts -->
+<div class="container">
+
+    <div class="section">
+
+        <div class="row">
+
+            <h3><i class="mdi-content-send brown-text">Contact Me</i></h3>
+
+            <div class="card-panel grey lighten-5 z-depth-1">
+
+                <div class="row">
+
+                    <div class="col s4">
+                        <img src="" th:src="@{/images/me.jpg}" alt="" class="responsive-img"/>
+                    </div>
+
+                    <div class="col s8" style="font-family: 'Comic Sans MS', sans-serif;">
+                        <p>My name is Safin Ramil. I'm a student at the Kazan Federal University.</p>
+
+                        <p>This is my Java Lab course work</p>
+
+                        <div class="divider"></div>
+
+                        <br/>
+
+                        <div>
+                            <div>
+                                <a class="btn btn-floating green"><i class="material-icons medium">perm_identity</i></a>
+                                Safin Ramil
+                            </div>
+
+                            <br/>
+                            <div>
+                                <a class="btn btn-floating pulse blue"><i class="material-icons medium">email</i></a>
+                                RamilSafNab1996@gmail.com
+                            </div>
+                            <br/>
+                            <div>
+                                <a class="btn btn-floating red"><i class="material-icons">call</i></a>
+                                8-800-200-600
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="" th:src="@{/images/background3.jpg}" alt="Unsplashed background img 3"/></div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Bla bla bla</h5>
+                <p class="grey-text text-lighten-4">Blablablabla blablabla blablablablabla bla blabla blablabla. blabla
+                    blablabla blabla
+                    blablablabla blablablabla blablablablablabla bla blabla blablablabla
+                </p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">It's a trap!</a></li>
+                    <li><a class="white-text" href="#!">Don't follow this link!</a></li>
+                    <li><a class="white-text" href="#!">I warned you ...</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Ramil Safin © 2017</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script src="" th:src="@{/js/materialize.min.js}"></script>
+<script src="" th:src="@{/js/init.js}"></script>
+
+</body>
+</html>

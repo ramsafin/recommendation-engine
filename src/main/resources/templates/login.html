@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+
+    <link href="" th:href="@{/css/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link href="" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+
+</head>
+<body>
+
+<h1 th:if="${success_registration_user}">
+    Successfully registered user id
+    <span th:text="${success_registration_user.email}"></span>
+</h1>
+
+<form action="#" th:action="@{/login}" method="post">
+
+    <label> Login:
+        <input type="email" name="email"/>
+    </label>
+
+    <br/>
+
+    <label> Password:
+        <input type="password" name="password"/>
+    </label>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form>
+
+</body>
+</html>
