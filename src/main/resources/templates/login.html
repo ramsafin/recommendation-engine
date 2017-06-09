@@ -2,34 +2,163 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <link href="" th:href="@{/css/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-    <link href="" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <title>Welcome, nature is waiting for you!</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}" media="screen,projection"/>
 
 </head>
 <body>
 
-<h1 th:if="${success_registration_user}">
-    Successfully registered user id
-    <span th:text="${success_registration_user.email}"></span>
-</h1>
+<!-- navigation -->
+<header>
 
-<form action="#" th:action="@{/login}" method="post">
+    <nav class="white" role="navigation">
 
-    <label> Login:
-        <input type="email" name="email"/>
-    </label>
+        <div class="nav-wrapper container">
 
-    <br/>
+            <a id="logo-container" href="#" class="brand-logo">Beauty's right behind you</a>
 
-    <label> Password:
-        <input type="password" name="password"/>
-    </label>
+            <ul class="right hide-on-med-and-down">
 
-    <button class="btn btn-primary" type="submit">Submit</button>
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
 
-</form>
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<!-- Lgoin form -->
+<div class="container">
+
+    <div class="section row">
+
+        <form class="col s12">
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input maxlength="128" placeholder="Enter your first name (optional)" id="name" type="text"/>
+                    <label for="name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input maxlength="128" placeholder="Enter your surname (optional)" id="surname" type="text"/>
+                    <label for="surname">Surname</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input maxlength="64" id="password" type="password" class="validate"/>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate"/>
+                    <label for="email">Email</label>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Bla bla bla</h5>
+                <p class="grey-text text-lighten-4">Blablablabla blablabla blablablablabla bla blabla blablabla. blabla
+                    blablabla blabla
+                    blablablabla blablablabla blablablablablabla bla blabla blablablabla
+                </p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">It's a trap!</a></li>
+                    <li><a class="white-text" href="#!">Don't follow this link!</a></li>
+                    <li><a class="white-text" href="#!">I warned you ...</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Ramil Safin © 2017</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script src="" th:src="@{/js/materialize.min.js}"></script>
+<script src="" th:src="@{/js/init.js}"></script>
 
 </body>
 </html>
