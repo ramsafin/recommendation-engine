@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * Created by Safin Ramil on 07.06.17
- * Safin.Ramil@ordotrans.ru
+ * RamilSafNab1996@gmail.com
  */
 
 @Entity
@@ -140,7 +140,6 @@ public class User implements Serializable {
 
     // util method
     public void addRole(Role role) {
-        role.getUsers().add(this);
         this.getRoles().add(role);
     }
 

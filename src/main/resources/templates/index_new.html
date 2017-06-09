@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <title>Default home page</title>
+    <title>Welcome, nature is waiting for you!</title>
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
@@ -16,41 +16,28 @@
 <body>
 
 <!-- navigation -->
-<header class="navbar-fixed">
-
-    <!--Login, Sign up dropdown-->
-    <ul id="auth-dropdown" class="dropdown-content">
-        <li>
-            <a href="#" th:href="@{/login}">
-                Login
-            </a>
-        </li>
-
-        <li>
-            <a href="#" th:href="@{/signup}">
-                Sign up
-            </a>
-        </li>
-    </ul>
+<header>
 
     <nav class="white" role="navigation">
 
-        <div class="nav-wrapper">
+        <div class="nav-wrapper container">
 
-            <a id="logo-container" href="#" class="brand-logo left">Beauty's right behind you</a>]
+            <a id="logo-container" href="#" class="brand-logo">Beauty's right behind you</a>
 
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <ul class="right hide-on-med-and-down">
 
-                <li><a href="#">Blog</a></li>
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
 
                 <li><a href="#">About Me</a></li>
 
                 <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
 
-                    <a class="dropdown-button" href="#!" data-activates="auth-dropdown">
-                        Auth<i class="material-icons right">arrow_drop_down</i>
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
                     </a>
-
                 </li>
 
                 <li th:if="${user != null}">
@@ -59,11 +46,41 @@
                     </a>
                 </li>
 
-                <li class="truncate">
-                    <a th:if="${user != null}" href="#">Hello, <span th:text="${user.email}"></span></a>
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
                 </li>
 
             </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 
         </div>
 
@@ -242,7 +259,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Ramil Safin © 2017</a>
+            Made by <a class="brown-text text-lighten-3" href="https://vk.com/tat.arin">Ramil Safin © 2017</a>
         </div>
     </div>
 </footer>
