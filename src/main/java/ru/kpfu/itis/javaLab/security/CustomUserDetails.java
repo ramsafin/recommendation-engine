@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Safin Ramil on 07.06.17
- * Safin.Ramil@ordotrans.ru
+ * RamilSafNab1996@gmail.com
  * <p>
  * Custom implementation of Spring Security UserDetails
  */

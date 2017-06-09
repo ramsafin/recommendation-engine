@@ -2,34 +2,265 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <link href="" th:href="@{/css/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-    <link href="" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <title>Welcome, nature is waiting for you!</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/main.css}" media="screen,projection"/>
+
+    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
 
 </head>
 <body>
 
-<h1 th:if="${success_registration_user}">
-    Successfully registered user id
-    <span th:text="${success_registration_user.email}"></span>
-</h1>
+<!-- navigation -->
+<header>
 
-<form action="#" th:action="@{/login}" method="post">
+    <nav class="white" role="navigation">
 
-    <label> Login:
-        <input type="email" name="email"/>
-    </label>
+        <div class="nav-wrapper container">
 
-    <br/>
+            <a id="logo-container" href="#" th:href="@{/}" class="brand-logo">Beauty's right behind you</a>
 
-    <label> Password:
-        <input type="password" name="password"/>
-    </label>
+            <ul class="right hide-on-med-and-down">
 
-    <button class="btn btn-primary" type="submit">Submit</button>
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
 
-</form>
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<section class="container">
+
+    <div class="section row">
+
+        <!-- error message -->
+
+        <div th:if="${error != null}" class="col s12 message">
+
+            <div class="row">
+
+                <div class="col s3"></div>
+
+                <div class="col s6 center">
+
+                    <div class="alert flow-text" th:inline="text">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        [[${error}]]
+                    </div>
+
+                </div>
+
+                <div class="col s3"></div>
+
+            </div>
+
+        </div>
+
+        <!-- logout message -->
+
+        <div th:if="${logout != null}" class="col s12 message">
+
+            <div class="row">
+
+                <div class="col s3"></div>
+
+                <div class="col s6 center">
+
+                    <div class="alert info flow-text" th:inline="text">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        [[${logout}]]
+                    </div>
+
+                </div>
+
+                <div class="col s3"></div>
+
+            </div>
+
+        </div>
+
+        <!-- Registration successful message -->
+        <div th:if="${message != null}" class="col s12 message">
+
+            <div class="row">
+
+                <div class="col s3"></div>
+
+                <div class="col s6 center">
+
+                    <div class="alert success flow-text" th:inline="text">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        [[${message}]]
+                    </div>
+
+                </div>
+
+                <div class="col s3"></div>
+
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="col s2"></div>
+
+        <div class="col s8">
+
+            <h3 class="login_or_signup center">Login or <a href="#" th:href="@{/signup}">Sign Up</a></h3>
+
+            <div class="divider"></div>
+
+            <br/>
+
+            <div class="center">
+
+                <a href="#" th:href="@{/auth/google}" class="btn waves-effect waves-green red">
+                    <i class="fa fa-google-plus visible-xl"></i>
+                    <span class="hidden-xl"></span>
+                </a>
+
+            </div>
+
+            <br/>
+
+            <h5 style="color: #aaa;" class="or-divider"><span>or</span></h5>
+
+            <!-- login form -->
+
+            <form class="center" action="#" th:action="@{/login}" method="post" accept-charset="UTF-8">
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" name="email" class="validate"/>
+                        <label data-error="wrong email" for="email">Email</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input minlength="8" maxlength="64" id="password" type="password" name="password" class="validate"/>
+                        <label data-error="password length should be from 8 to 64" for="password">Password</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="btn waves-effect waves-light col s12" type="submit" name="action">
+                        Submit<i class="material-icons right">send</i>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="col s2"></div>
+
+    </div>
+
+</section>
+
+<div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="" th:src="@{/images/background7.jpeg}" alt="Unsplashed background img 3"/></div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Bla bla bla</h5>
+                <p class="grey-text text-lighten-4">Blablablabla blablabla blablablablabla bla blabla blablabla. blabla
+                    blablabla blabla
+                    blablablabla blablablabla blablablablablabla bla blabla blablablabla
+                </p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">It's a trap!</a></li>
+                    <li><a class="white-text" href="#!">Don't follow this link!</a></li>
+                    <li><a class="white-text" href="#!">I warned you ...</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="https://vk.com/tat.arin">Ramil Safin © 2017</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script src="" th:src="@{/js/materialize.min.js}"></script>
+<script src="" th:src="@{/js/init.js}"></script>
 
 </body>
 </html>
