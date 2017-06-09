@@ -7,6 +7,11 @@ import ru.kpfu.itis.javaLab.model.enums.UserRole;
 
 import java.util.Optional;
 
+/**
+ * Created by Safin Ramil on 07.06.17
+ * RamilSafNab1996@gmail.com
+ */
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 

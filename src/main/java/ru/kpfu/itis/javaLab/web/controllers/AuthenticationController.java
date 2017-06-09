@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kpfu.itis.javaLab.service.interfaces.UserService;
 import ru.kpfu.itis.javaLab.web.forms.RegistrationForm;
@@ -18,7 +20,9 @@ import java.security.Principal;
 
 /**
  * Created by Safin Ramil on 07.06.17
- * Safin.Ramil@ordotrans.ru
+ * RamilSafNab1996@gmail.com
+ *
+ * Authentication and authorization controller
  */
 
 @Controller
@@ -34,8 +38,20 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/login")
-    public String showLogin() {
-        return "login";
+    public ModelAndView showLogin(
+        @RequestParam(value = "error", required = false) String error,
+        @RequestParam(value = "logout", required = false) String logout
+    ) {
+
+        ModelAndView modelAndView = new ModelAndView("login");
+
+        if (error != null) {
+            modelAndView.addObject("error", "Invalid email or password!");
+        } else if (logout != null) {
+            modelAndView.addObject("logout", "You've been logged out successfully.");
+        }
+
+        return modelAndView;
     }
 
 

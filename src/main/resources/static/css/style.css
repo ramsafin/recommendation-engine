@@ -30,6 +30,11 @@ p {
   width: 100%;
 }
 
+
+.login_or_signup {
+  font-size: 24pt;
+}
+
 @media only screen and (max-width: 992px) {
   .parallax-container .section {
     position: absolute;
@@ -43,6 +48,14 @@ p {
   #logo-container {
     font-size: 16pt;
   }
+
+  .login_or_signup {
+    font-size: 16pt;
+  }
+
+  .or-divider {
+    font-size: 14pt;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,6 +67,13 @@ p {
     font-size: 14pt;
   }
 
+  .login_or_signup {
+    font-size: 15pt;
+  }
+
+  .or-divider {
+    font-size: 13pt;
+  }
 }
 
 .icon-block {

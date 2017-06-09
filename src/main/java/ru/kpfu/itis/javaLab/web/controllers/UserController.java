@@ -9,7 +9,7 @@ import java.security.Principal;
 
 /**
  * Created by Safin Ramil on 07.06.17
- * Safin.Ramil@ordotrans.ru
+ * RamilSafNab1996@gmail.com
  */
 
 @RestController
