@@ -4,9 +4,7 @@ import ru.kpfu.itis.javaLab.model.enums.UserRole;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Created by Safin Ramil on 07.06.17
@@ -23,8 +21,6 @@ public class Role implements Serializable {
     private Long id;
 
     private UserRole name;
-
-    private Set<User> users = new LinkedHashSet<>(0);
 
     public Role() {
     }
@@ -44,21 +40,12 @@ public class Role implements Serializable {
         return name;
     }
 
-    @ManyToMany(mappedBy = "roles")
-    public Set<User> getUsers() {
-        return users;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
     public void setName(UserRole name) {
         this.name = name;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     @Override
@@ -79,7 +66,6 @@ public class Role implements Serializable {
         final StringBuilder sb = new StringBuilder("Role{");
         sb.append("id=").append(id);
         sb.append(", name=").append(name);
-        sb.append(", users=").append(users);
         sb.append('}');
         return sb.toString();
     }

@@ -140,7 +140,6 @@ public class User implements Serializable {
 
     // util method
     public void addRole(Role role) {
-        role.getUsers().add(this);
         this.getRoles().add(role);
     }
 

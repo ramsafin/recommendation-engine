@@ -16,7 +16,6 @@ import ru.kpfu.itis.javaLab.service.interfaces.UserService;
 import ru.kpfu.itis.javaLab.web.forms.RegistrationForm;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 /**
  * Created by Safin Ramil on 07.06.17
@@ -56,9 +55,7 @@ public class AuthenticationController {
 
 
     @GetMapping("/signup")
-    public String showRegistrationForm(Model model, Principal principal) {
-
-        if (principal != null) return "redirect:/";
+    public String showRegistrationForm(Model model) {
 
         model.addAttribute("userForm", new RegistrationForm());
 
