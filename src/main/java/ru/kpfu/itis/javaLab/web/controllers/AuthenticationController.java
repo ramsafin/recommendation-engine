@@ -77,16 +77,17 @@ public class AuthenticationController {
             return "signup";
         }
 
-        logger.info("Form hasn't any error");
+        logger.info("Form hasn't got any errors");
 
         userService.register(form).ifPresent(user -> {
 
             logger.info("User's been registered");
 
-            logger.info("ID: " + user.getId());
-
-            redirectAttributes.addFlashAttribute("success_registration_user", user);
+            redirectAttributes.addFlashAttribute("message",
+                String.format("You're welcome, %s!", user.getEmail()));
         });
+
+        logger.info("redirect ot login");
 
         return "redirect:/login";
     }
