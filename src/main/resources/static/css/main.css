@@ -67,12 +67,39 @@
   color: black;
 }
 
+.blog-title h1{
+  font-family: "Comic Sans MS", sans-serif;
+  font-weight:500;
+  color: rgba(255, 255, 255, .9);
+}
+
+.blog-title {
+  background-color: #26a69a;
+}
+
+.blog-post-title {
+  font-family: "Comic Sans MS", sans-serif;
+  color: #795548;
+}
+
+.post-wrap {
+  padding-left: 5%;
+}
+
+.comments {
+  color: #26a69a;
+}
+
 @media only screen and (max-width: 992px) {
   /* The alert message box */
   .alert {
     padding: 10px;
     margin-bottom: 10px;
     font-size: 12pt;
+  }
+
+  .blog-title h1{
+    font-size: 24pt;
   }
 }
 
@@ -82,6 +109,10 @@
     padding: 5px;
     margin-bottom: 7px;
     font-size: 11pt;
+  }
+
+  .blog-title h1 {
+    font-size: 19pt;
   }
 }
 
@@ -97,6 +128,10 @@
   .closebtn {
     font-size: 10pt;
     line-height: 10px;
+  }
+
+  .blog-post-title {
+    font-size: 18pt;
   }
 }
 
