@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <title>Default home page</title>
+    <title>Welcome, nature is waiting for you!</title>
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
@@ -15,159 +15,253 @@
 </head>
 <body>
 
+<!-- navigation -->
 <header>
 
-    <!-- navigation -->
-    <nav class="top-nav green">
+    <nav class="white" role="navigation">
+
+        <div class="nav-wrapper container">
+
+            <a id="logo-container" href="#" class="brand-logo">Beauty's right behind you</a>
+
+            <ul class="right hide-on-med-and-down">
+
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+
+                <li><a href="#" th:href="@{/blog}">Blog</a></li>
+
+                <li><a href="#">About Me</a></li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/login}">Login</a>
+                </li>
+
+                <li th:if="${user == null}">
+                    <a href="#" th:href="@{/signup}">
+                        Sign up
+                    </a>
+                </li>
+
+                <li th:if="${user != null}">
+                    <a href="#" th:href="@{/logout}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+
+                <li th:if="${user != null}" class="truncate">
+                    <a href="#">Hello, <span th:text="${user.email}"></span></a>
+                </li>
+
+            </ul>
+
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
 
     </nav>
 
 </header>
 
-<main class="container">
+<!-- intro -->
+<div id="index-banner" class="parallax-container">
 
-    <div class="row">
+    <div class="section no-pad-bot">
 
-        <section class="col s9">
+        <div class="container">
+            <br/><br/>
 
-            <h3 class="center-align">Examples of elements</h3>
+            <h1 class="header center teal-text">Nature blog</h1>
 
-            <div class="divider"></div>
-
-            <div class="section">
-                <h4>Buttons</h4>
-                <div style="display: flex; justify-content: space-around">
-                    <a class="waves-effect waves-light btn">button</a>
-                    <a class="waves-effect waves-light btn">
-                        <i class="material-icons left">cloud</i>button
-                    </a>
-                    <a class="btn btn-floating btn-large cyan pulse"><i class="material-icons">edit</i></a>
-                </div>
+            <div class="row center">
+                <h5 class="header col s12 light">Simple to read and unforgettable blog about beauty of nature</h5>
             </div>
 
-
-            <div class="section">
-
-                <h4> Chips </h4>
-
-                <div class="chip">
-                    <img src="/images/picture.jpeg" alt="Contact Person"/>
-                    This is a chip
-                </div>
-
-                <br/>
-
-                <div class="chip">
-                    Tag chip
-                    <i class="close material-icons">close</i>
-                </div>
-
-
-                <br/>
-
-                <div class="chips chips-placeholder" data-index="0" data-initialized="true">
-                    <input id="chip" class="input" placeholder="+Tag"/>
-                </div>
-
-                <script>
-                    $('.chips-placeholder').material_chip({
-                        placeholder: 'Enter a tag',
-                        secondaryPlaceholder: '+Tag'
-                    });
-                </script>
-
+            <div th:if="${user == null}" class="row center">
+                <a href="#" th:href="@{/login}" id="download-button"
+                   class="btn-large waves-effect waves-light teal lighten-1"><u>Log in</u> <strong>or</strong> <u>Sign
+                    up</u></a>
             </div>
 
-            <div class="divider"></div>
-
-            <div class="section">
-                <h4>Cards</h4>
-
-                <div class="row">
-                    <div class="col s12 m9">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="" th:src="@{/images/picture.jpeg}"/>
-                                <span class="card-title">Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information.
-                                    I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col s12 m9">
-                        <div class="card hoverable">
-                            <div class="card-image">
-                                <img src="" th:src="@{/images/picture.jpeg}"/>
-                                <span class="card-title">Image title</span>
-
-                                <a class="btn-floating btn-large halfway-fab waves-effect waves-light cyan pulse"><i
-                                        class="material-icons">edit</i></a>
-
-                                <!--<a class="btn-floating btn-large halfway-fab waves-effect waves-light red pulse"><i-->
-                                <!--class="material-icons">delete</i></a>-->
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title">Text title</span>
-                                <p>I am a very simple card. I am good at containing small bits of information. I am
-                                    convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
+            <div th:if="${user != null}" class="row center">
+                <a href="#" th:href="@{/blog}" id="download-button"
+                   class="btn-large waves-effect waves-light teal lighten-1">Read more</a>
             </div>
 
-        </section>
+            <br/><br/>
 
-        <section class="col s3">
-
-            <div class="section">
-                <h5 class="center-align">Tags</h5>
-                <p><i>tag1, tag2</i></p>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="section">
-                <h5 class="center-align">Recent posts</h5>
-            </div>
-
-            <div>
-                <h5 class="light">A little card</h5>
-                <div class="card small">
-                    <div class="card-image">
-                        <img src="" th:src="@{/images/picture.jpeg}"/>
-                        <span class="card-title">Title</span>
-                    </div>
-                    <div class="card-content">
-                        <p class="truncate">I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Ссылка здесь</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
 
     </div>
 
-</main>
-<footer>
+    <div class="parallax"><img src="" th:src="@{/images/background9.jpg}" alt=""/></div>
 
+</div>
+
+<!-- into 2-->
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">language</i></h2>
+                    <h5 class="center">All around the world</h5>
+
+                    <p class="light center">Can you imagine being in China, Chili or even Russia?! There're plenty of
+                        blog
+                        posts which will show you <strong>ALL</strong> you'd like to read.
+                        Hope, you'll enjoy!</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">hd</i><i
+                            class="material-icons">high_quality</i></h2>
+                    <h5 class="center">High resolution nature</h5>
+
+                    <p class="light center">All pictures are photographed by professionals. Wanna see something unusual,
+                        invisible to unaided eye?
+                        You'll never regret)</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4 hoverable">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">thumbs_up_down</i><i class="material-icons">comment</i>
+                    </h2>
+                    <h5 class="center">Share you opinion</h5>
+
+                    <p class="light center">Judgement is the part of developing, so feel free to speak out.
+                        Vote, write comments and offer how blog should keep improving. Don't be afraid...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="" th:src="@{/images/background2.jpg}" alt="Unsplashed background img 2"/></div>
+</div>
+
+<!-- contacts -->
+<div class="container">
+
+    <div class="section">
+
+        <div class="row">
+
+            <h3><i class="mdi-content-send brown-text">Contact Me</i></h3>
+
+            <div class="card-panel grey lighten-5 z-depth-1">
+
+                <div class="row">
+
+                    <div class="col s4">
+                        <img src="" th:src="@{/images/me.jpg}" alt="" class="responsive-img"/>
+                    </div>
+
+                    <div class="col s8" style="font-family: 'Comic Sans MS', sans-serif;">
+                        <p>My name is Safin Ramil. I'm a student at the Kazan Federal University.</p>
+
+                        <p>This is my Java Lab course work</p>
+
+                        <div class="divider"></div>
+
+                        <br/>
+
+                        <div>
+                            <div>
+                                <a class="btn btn-floating green"><i class="material-icons medium">perm_identity</i></a>
+                                Safin Ramil
+                            </div>
+
+                            <br/>
+                            <div>
+                                <a class="btn btn-floating pulse blue"><i class="material-icons medium">email</i></a>
+                                RamilSafNab1996@gmail.com
+                            </div>
+                            <br/>
+                            <div>
+                                <a class="btn btn-floating red"><i class="material-icons">call</i></a>
+                                8-800-200-600
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="" th:src="@{/images/background3.jpg}" alt="Unsplashed background img 3"/></div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Bla bla bla</h5>
+                <p class="grey-text text-lighten-4">Blablablabla blablabla blablablablabla bla blabla blablabla. blabla
+                    blablabla blabla
+                    blablablabla blablablabla blablablablablabla bla blabla blablablabla
+                </p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">It's a trap!</a></li>
+                    <li><a class="white-text" href="#!">Don't follow this link!</a></li>
+                    <li><a class="white-text" href="#!">I warned you ...</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="https://vk.com/tat.arin">Ramil Safin © 2017</a>
+        </div>
+    </div>
 </footer>
 
 <!-- Scripts -->

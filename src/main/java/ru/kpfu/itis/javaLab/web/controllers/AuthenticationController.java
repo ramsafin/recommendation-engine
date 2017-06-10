@@ -87,7 +87,7 @@ public class AuthenticationController {
                 String.format("You're welcome, %s!", user.getEmail()));
         });
 
-        logger.info("redirect ot login");
+        logger.info("redirect to login");
 
         return "redirect:/login";
     }
