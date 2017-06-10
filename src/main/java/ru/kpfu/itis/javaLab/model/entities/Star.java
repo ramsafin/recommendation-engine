@@ -59,6 +59,11 @@ public class Star implements Serializable {
         return post;
     }
 
+    @Column(name = "post_id", nullable = false)
+    public Long getPostId() {
+        return postId;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
