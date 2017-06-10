@@ -20,12 +20,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * Find user by login
+     * Select user with joining role
      *
      * @param email - user email
      * @return found user or null
      */
 
-    @EntityGraph(value = "graph.users.roles")
+    @EntityGraph(value = "graphs.User.roles")
     Optional<User> findByEmailIgnoreCase(@Param("email") String email);
 
 

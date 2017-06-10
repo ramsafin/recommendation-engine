@@ -19,9 +19,9 @@ import java.util.Set;
 @NamedEntityGraphs(value = {
 
     @NamedEntityGraph(
-        name = "graphs.posts.author",
+        name = "graphs.Post.tags",
         attributeNodes = {
-            @NamedAttributeNode(value = "author")
+            @NamedAttributeNode(value = "tags")
         }
     )
 })
@@ -164,7 +164,6 @@ public class Post implements Serializable {
         sb.append(", picture='").append(picture).append('\'');
         sb.append(", created=").append(created);
         sb.append(", updated=").append(updated);
-        sb.append(", author=").append(author);
         sb.append(", authorId=").append(authorId);
         sb.append(", tags=").append(tags);
         sb.append('}');
