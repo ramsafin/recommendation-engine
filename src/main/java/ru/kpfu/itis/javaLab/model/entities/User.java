@@ -18,7 +18,7 @@ import java.util.Set;
 @NamedEntityGraphs(value = {
 
     @NamedEntityGraph(
-        name = "graph.users.roles",
+        name = "graphs.User.roles",
         attributeNodes = {
             @NamedAttributeNode(value = "roles")
         }
