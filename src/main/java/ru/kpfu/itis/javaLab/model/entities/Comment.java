@@ -119,9 +119,7 @@ public class Comment implements Serializable {
         sb.append("id=").append(id);
         sb.append(", content='").append(content).append('\'');
         sb.append(", created=").append(created);
-        sb.append(", commenter=").append(commenter);
         sb.append(", commenterId=").append(commenterId);
-        sb.append(", post=").append(post);
         sb.append(", postId=").append(postId);
         sb.append('}');
         return sb.toString();
