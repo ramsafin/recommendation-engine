@@ -54,7 +54,7 @@ public class CustomUserService implements UserService {
     public Optional<User> register(RegistrationForm form) {
 
         // check if exists
-        if (userRepository.existsByEmail(form.getEmail())) {
+        if (userRepository.existsByEmailIgnoreCase(form.getEmail())) {
 
             logger.warn(String.format("User with email '%s' already exists", form.getEmail()));
 
