@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -22,6 +23,16 @@ public class BlogController {
         logger.debug("/blog request");
 
         ModelAndView modelAndView = new ModelAndView("blog");
+
+        modelAndView.addObject("test", "Test phrase");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/blog/post/{id}")
+    public ModelAndView showBlogPost(@PathVariable("id") Long id) {
+
+        ModelAndView modelAndView = new ModelAndView("post");
 
         modelAndView.addObject("test", "Test phrase");
 
