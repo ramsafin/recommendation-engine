@@ -171,7 +171,6 @@ public class User implements Serializable {
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", registered=").append(registered);
         sb.append(", picture='").append(picture).append('\'');
-        sb.append(", roles=").append(roles);
         sb.append('}');
         return sb.toString();
     }
