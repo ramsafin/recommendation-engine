@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,6 +45,10 @@ public class Post implements Serializable {
 
 
     private Set<Tag> tags = new HashSet<>(0);
+
+    private Set<Comment> comments = new LinkedHashSet<>(0);
+
+    private Set<Star> stars = new LinkedHashSet<>(0);
 
     public Post() {
 
@@ -103,6 +108,17 @@ public class Post implements Serializable {
     }
 
 
+    @OrderBy(value = "created desc")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    public Set<Star> getStars() {
+        return stars;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -137,6 +153,14 @@ public class Post implements Serializable {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setStars(Set<Star> stars) {
+        this.stars = stars;
     }
 
     @Override

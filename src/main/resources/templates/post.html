@@ -107,102 +107,52 @@
         <div class="col s8">
 
             <!-- Post -->
-            <div class="col s12">
+            <div class="col s12" th:if="${post != null}">
 
                 <!-- Date/Time -->
-                <p>
+                <p th:inline="text">
                     <span class="glyphicon glyphicon-calendar"></span>
-                    Posted on August 24, 2013 at 9:00 | <a href="#" class="comments">3 comments</a>
+                    Posted on [[${#temporals.day(post.created)}]] [[${#temporals.monthName(post.created)}]],
+                    [[${#temporals.year(post.created)}]] at [[${#temporals.format(post.created, 'HH:mm')}]] |
+                    <a href="#" class="comments">[[${#sets.size(post.comments)}]] comments</a>
                 </p>
 
                 <!-- Tags -->
-                <p>
+                <p th:if="${!#sets.isEmpty(post.tags)}">
                     <span class="glyphicon glyphicon-tags"></span>&nbsp;
-
-                    <span class="chip">nature</span>
-                    <span class="chip">Asia</span>
-                    <span class="chip">tigers</span>
-                    <span class="chip">lions</span>
-                    <span class="chip">sexy</span>
-
+                    <span class="chip" th:each="tag: ${post.tags}" th:text="${tag.name}">tags</span>
                 </p>
 
                 <div class="divider"></div>
 
+                <h5 class="blog-post-title" th:text="${post.title}"></h5>
 
                 <!-- Preview Image -->
-                <a href="#">
-                    <img class="img-responsive" src="#" th:src="@{/images/background4.jpg}"/>
+                <a href="#!">
+                    <img class="img-responsive" src="#"
+                         th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
+                             : @{/images/default_blog_picture.jpg}"/>
                 </a>
-
-                <!-- post title -->
-                <h5 class="blog-post-title">Title</h5>
 
                 <hr/>
 
                 <!-- Post Content -->
-                <section class="lead flow-text">
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
-                    This is a post, with interesting title and no bullshit.
-                    Well let's start with the idea of freedom - being free!
-                    It's so wonderful to open yourself to it...
+                <section class="lead flow-text" th:text="${post.content}">
+
                 </section>
 
-                <hr/>
+                <p>
+                    <b>Do you like this post?</b>
+                </p>
 
-                <!-- Stars and number of visitors -->
-                <div style="display: flex; justify-content: space-between">
-
-                    <a class="waves-effect waves-light btn">
+                <p>
+                    <a th:inline="text">
                         <i class="material-icons left small">star</i>
-                        5544
+                        <b>[[${#sets.size(post.stars)}]]</b>
                     </a>
+                </p>
 
-                    <a class="waves-effect waves-light btn">
-                        12122
-                        <i class="material-icons left small">visibility</i>
-                    </a>
-                </div>
-
-                <br/>
+                <hr/><hr/><hr/>
 
                 <br/>
                 <br/>
@@ -247,23 +197,17 @@
 
                 <hr/>
 
-                <div class="col s12">
+                <div class="col s12" th:if="${!#sets.isEmpty(post.comments)}">
 
-                    <div>
-                        <h5>John Snow
-                            <small>9:41 on August 24, 2013</small>
+                    <div th:each="comment: ${post.comments}" th:inline="text">
+                        <h5>[[${comment.commentorName}]]
+                            <small>
+                                [[${#temporals.day(comment.created)}]] [[${#temporals.monthName(comment.created)}]],
+                                [[${#temporals.year(comment.created)}]] at [[${#temporals.format(comment.created, 'HH:mm')}]]
+                            </small>
                         </h5>
-                        <blockquote>
+                        <blockquote th:text="${comment.content}">
                             Winter is coming!
-                        </blockquote>
-                    </div>
-
-                    <div>
-                        <h5>Aria Stark
-                            <small>9:46 on August 24, 2013</small>
-                        </h5>
-                        <blockquote>
-                            Sure, it is coming, you, bastard!
                         </blockquote>
                     </div>
 
