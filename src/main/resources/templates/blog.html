@@ -185,15 +185,15 @@
 
                     <!-- Preview Image -->
                     <a href="#" th:href="@{/blog/post/{path}(path=${post.id})}">
-                        <img class="img-responsive" src="#" th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})} : @{/images/default_blog_picture.jpg}"/>
+                        <img class="img-responsive" src="#"
+                             th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
+                             : @{/images/default_blog_picture.jpg}"/>
                     </a>
 
                     <hr/>
 
                     <!-- Post Content -->
-                    <section class="lead flow-text truncate" th:text="${post.content}">
-
-                    </section>
+                    <section class="lead flow-text truncate" th:text="${post.content}"></section>
 
                     <br/>
 
@@ -274,8 +274,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <div class="chip">Арсланов - человек года!</div>
-
+                        <div th:if="${tags != null}" class="chip" th:each="tag: ${tags}" th:text="${tag.name}"></div>
                     </div>
                 </div>
             </div>

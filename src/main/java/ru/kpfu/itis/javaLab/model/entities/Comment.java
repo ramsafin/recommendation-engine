@@ -20,13 +20,13 @@ public class Comment implements Serializable {
 
     private LocalDateTime created;
 
-
     private User commenter;
     private Long commenterId;
 
     private Post post;
     private Long postId;
 
+    private String commentorName;
 
     public Comment() {
 
@@ -70,6 +70,11 @@ public class Comment implements Serializable {
         return postId;
     }
 
+    @Column(name = "commentor_name")
+    public String getCommentorName() {
+        return commentorName;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,6 +101,10 @@ public class Comment implements Serializable {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public void setCommentorName(String commentorName) {
+        this.commentorName = commentorName;
     }
 
     @Override

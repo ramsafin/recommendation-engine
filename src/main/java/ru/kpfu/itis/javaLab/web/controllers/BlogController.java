@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kpfu.itis.javaLab.model.entities.Post;
 import ru.kpfu.itis.javaLab.service.interfaces.BlogService;
+import ru.kpfu.itis.javaLab.web.exceptions.PageNotFoundException;
 import ru.kpfu.itis.javaLab.web.utils.Pager;
 
 /**
@@ -38,18 +39,16 @@ public class BlogController {
     @GetMapping("/blog")
     public ModelAndView showBlog(@RequestParam(defaultValue = "1") Integer page) {
 
-        logger.debug("/blog request");
-
         ModelAndView modelAndView = new ModelAndView("blog");
 
         // find page
         Integer evalPage = page < 1 ? 0 : page - 1;
-
-        PageRequest pageRequest = new PageRequest(evalPage, PAGE_SIZE, Sort.Direction.DESC, "updated");
-        Page<Post> postsPage = blogService.getPostsByPage(pageRequest);
+        Page<Post> postsPage = blogService.getPostsByPage(new PageRequest(evalPage, PAGE_SIZE, Sort.Direction.DESC,
+            "updated"));
 
         // posts
         modelAndView.addObject("posts", postsPage.getContent());
+        modelAndView.addObject("tags", blogService.getAllTags());
 
         // pagination
         modelAndView.addObject("pager", new Pager(postsPage.getTotalPages(), postsPage.getNumber(), PAGE_SIZE));
@@ -66,7 +65,9 @@ public class BlogController {
 
         ModelAndView modelAndView = new ModelAndView("post");
 
-        modelAndView.addObject("test", "Test phrase");
+        Post post = blogService.getPostById(id).orElseThrow(PageNotFoundException::new);
+
+        modelAndView.addObject("post", post);
 
         return modelAndView;
     }
