@@ -17,7 +17,6 @@
 
     <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
 
-    <!--<link href="/css/blog-post.css" rel="stylesheet"/>-->
 </head>
 <body>
 
@@ -104,172 +103,108 @@
 
     <div class="row post-wrap">
 
-        <div class="container">
+        <!-- Pagination -->
+        <div th:if="${pages != null and pages > 1}" class="container">
+
             <div class="row">
+
                 <div class="col s12">
+
                     <ul class="pagination">
 
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        <li th:if="${currentPage != null}"
+                            th:class="${currentPage eq 1} ? 'page-item disabled' : 'page-item'">
+
+                            <a class="page-link" href="#"
+                               th:href="@{/blog(page=${currentPage eq 1? 1 : (currentPage - 1)})}">Previous</a>
+
                         </li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+
+                        <li th:class="${page eq currentPage}? 'page-item active' : 'page-item'"
+                            th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+
+                            <a class="page-link" href="#" th:href="@{/blog(page=${page})}" th:text="${page}"></a>
+
                         </li>
 
-                        <li class="page-item active">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        <li th:if="${currentPage != null}"
+                            th:class="${currentPage >= pages} ? 'page-item disabled' : 'page-item'">
+
+                            <a class="page-link"
+                               th:href="@{/blog(page=${currentPage >= pages? pages : (currentPage + 1)})}"
+                               href="#">Next</a>
+
                         </li>
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
                     </ul>
+
                 </div>
+
             </div>
+
         </div>
 
+        <!-- main content -->
         <div class="col s8">
 
-            <!-- main blog posts -->
+            <!-- blog posts -->
             <div>
 
                 <hr/>
 
                 <!-- Post -->
-                <div class="col s12">
+                <div th:each="post : ${posts}" class="col s12">
 
-                    <!-- Date/Time -->
-                    <p>
+                    <!-- Date/Time, comments -->
+                    <p th:inline="text">
                         <span class="glyphicon glyphicon-calendar"></span>
-                        Posted on August 24, 2013 at 9:00 | <a href="#" class="comments">3 comments</a>
+                        Posted on [[${#temporals.day(post.created)}]] [[${#temporals.monthName(post.created)}]],
+                        [[${#temporals.year(post.created)}]] at [[${#temporals.format(post.created, 'HH:mm')}]] |
+                        <a href="#" class="comments">[[${#sets.size(post.comments)}]] comments</a>
                     </p>
 
                     <!-- Tags -->
-                    <p>
+                    <p th:if="${!#sets.isEmpty(post.tags)}">
                         <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                        <span class="chip" th:each="tag: ${post.tags}" th:text="${tag.name}">tags</span>
 
-                        <span class="chip">nature</span>
-                        <span class="chip">Asia</span>
-                        <span class="chip">tigers</span>
-                        <span class="chip">lions</span>
-                        <span class="chip">sexy</span>
+                    </p>
 
+                    <p>
+                        <a th:inline="text">
+                            <i class="material-icons left small">star</i>
+                            <b>[[${#sets.size(post.stars)}]]</b>
+                        </a>
                     </p>
 
                     <div class="divider"></div>
 
+                    <!-- post title -->
+                    <h5 class="blog-post-title" th:text="${post.title}"></h5>
 
                     <!-- Preview Image -->
-                    <a href="#">
-                        <img class="img-responsive" src="#" th:src="@{/images/background4.jpg}"/>
+                    <a href="#" th:href="@{/blog/post/{path}(path=${post.id})}">
+                        <img class="img-responsive" src="#" th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})} : @{/images/default_blog_picture.jpg}"/>
                     </a>
-
-                    <!-- post title -->
-                    <h5 class="blog-post-title">Title</h5>
 
                     <hr/>
 
                     <!-- Post Content -->
-                    <section class="lead flow-text">
-                        This is a post, with interesting title and no bullshit.
-                        Well let's start with the idea of freedom - being free!
-                        It's so wonderful to open yourself to it...
+                    <section class="lead flow-text truncate" th:text="${post.content}">
+
                     </section>
-
-                    <hr/>
-
-                    <!-- Stars and number of visitors -->
-                    <div style="display: flex; justify-content: space-between">
-
-                        <a class="waves-effect waves-light btn">
-                            <i class="material-icons left small">star</i>
-                            5544
-                        </a>
-
-                        <a class="waves-effect waves-light btn">
-                            12122
-                            <i class="material-icons left small">visibility</i>
-                        </a>
-                    </div>
 
                     <br/>
 
                     <div class="row">
-                        <a href="#" class="btn waves-effect waves-green red col s12">
+                        <a href="#" th:href="@{/blog/post/{path}(path=${post.id})}"
+                           class="btn waves-effect waves-green red col s12">
+
                             <i class="fa fa-book visible-xl" aria-hidden="true"></i>
+
                             <span class="hidden-xl"></span>
-                        </a>
-                    </div>
 
-                    <br/>
-                    <br/>
-                    <br/>
-
-                </div>
-
-                <div class="col s12">
-
-                    <!-- Date/Time -->
-                    <p>
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        Posted on August 24, 2013 at 9:00 | <a href="#" class="comments">3 comments</a>
-                    </p>
-
-                    <!-- Tags -->
-                    <p>
-                        <span class="glyphicon glyphicon-tags"></span>&nbsp;
-
-                        <span class="chip">nature</span>
-                        <span class="chip">Asia</span>
-                        <span class="chip">tigers</span>
-                        <span class="chip">lions</span>
-                        <span class="chip">sexy</span>
-
-                    </p>
-
-                    <div class="divider"></div>
-
-
-                    <!-- Preview Image -->
-                    <a href="#">
-                        <img class="img-responsive" src="#" th:src="@{/images/background4.jpg}"/>
-                    </a>
-
-                    <!-- post title -->
-                    <h5 class="blog-post-title">Title</h5>
-
-                    <hr/>
-
-                    <!-- Post Content -->
-                    <section class="lead flow-text">
-                        This is a post, with interesting title and no bullshit.
-                        Well let's start with the idea of freedom - being free!
-                        It's so wonderful to open yourself to it...
-                    </section>
-
-                    <hr/>
-
-                    <!-- Stars and number of visitors -->
-                    <div style="display: flex; justify-content: space-between">
-
-                        <a class="waves-effect waves-light btn">
-                            <i class="material-icons left small">star</i>
-                            5544
-                        </a>
-
-                        <a class="waves-effect waves-light btn">
-                            12122
-                            <i class="material-icons left small">visibility</i>
-                        </a>
-                    </div>
-
-                    <br/>
-
-                    <div class="row">
-                        <a href="#" class="btn waves-effect waves-green red col s12">
-                            <i class="fa fa-book visible-xl" aria-hidden="true"></i>
-                            <span class="hidden-xl"></span>
                         </a>
                     </div>
 
@@ -351,29 +286,45 @@
 
 </div>
 
-<div class="container">
+<div th:if="${pages != null and pages > 1}" class="container">
+
     <div class="row">
+
         <div class="col s12">
+
             <ul class="pagination">
 
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                <li th:if="${currentPage != null}"
+                    th:class="${currentPage eq 1} ? 'page-item disabled' : 'page-item'">
+
+                    <a class="page-link" href="#"
+                       th:href="@{/blog(page=${currentPage eq 1? 1 : (currentPage - 1)})}">Previous</a>
+
                 </li>
 
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
+
+                <li th:class="${page eq currentPage}? 'page-item active' : 'page-item'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+
+                    <a class="page-link" href="#" th:href="@{/blog(page=${page})}" th:text="${page}"></a>
+
                 </li>
 
-                <li class="page-item active">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                <li th:if="${currentPage != null}"
+                    th:class="${currentPage >= pages} ? 'page-item disabled' : 'page-item'">
+
+                    <a class="page-link"
+                       th:href="@{/blog(page=${currentPage >= pages? pages : (currentPage + 1)})}"
+                       href="#">Next</a>
+
                 </li>
 
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
             </ul>
+
         </div>
+
     </div>
+
 </div>
 
 <!-- footer -->

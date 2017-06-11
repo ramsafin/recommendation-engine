@@ -39,6 +39,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
      */
 
     @EntityGraph(value = "graphs.Post.tags")
-    Page<Post> findByOrderByUpdatedDesc(Pageable pageable);
+    Page<Post> findAll(Pageable pageable);
 
 }

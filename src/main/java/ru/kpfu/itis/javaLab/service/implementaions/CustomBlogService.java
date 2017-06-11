@@ -32,11 +32,7 @@ public class CustomBlogService implements BlogService {
     @Transactional(readOnly = true)
     public Page<Post> getPostsByPage(Pageable pageable) {
 
-        logger.warn("Page number: " + pageable.getPageNumber());
-        logger.warn("Page page size: " + pageable.getPageSize());
-        logger.warn("Page offset: " + pageable.getOffset());
-
-        return postRepository.findByOrderByUpdatedDesc(pageable);
+        return postRepository.findAll(pageable);
     }
 
 }
