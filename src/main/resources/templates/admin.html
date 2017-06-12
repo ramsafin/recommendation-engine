@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Admin</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="" th:href="@{/css/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="" th:href="@{/js/fileinput/css/fileinput.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/main.css}" media="screen,projection"/>
+
+    <style>
+
+        .message {
+            margin-top: 0;
+        }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #file-1 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+    <div class="container">
+
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#!">Adminka</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#" th:href="@{/}">Index</a>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/blog}">Blog</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container-fluid" style="padding-top: 10%">
+
+    <div class="row">
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-3">
+
+            <!-- Blog Search Well -->
+            <div class="well">
+                <h4>Create blog post</h4>
+            </div>
+
+        </div>
+
+        <!-- Blog Post Content Column -->
+        <div class="col-lg-8">
+
+            <div th:if="${message != null}" class="alert success message">
+                <span class="closebtn">&times;</span>
+                <strong>Success!</strong> <span th:text="${message}"></span>
+            </div>
+
+            <section>
+
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">Write your post</div>
+
+                    <div class="panel-body">
+
+                        <!-- form -->
+                        <form th:object="${post}" id="post-form" action="#" th:action="@{/admin/blog/add_post}" method="POST"
+                              enctype="multipart/form-data">
+
+                            <div th:if="${#fields.hasErrors('title')}" class="alert message"
+                                 th:each="error: ${#fields.errors('title')}">
+                                <span class="closebtn">&times;</span>
+                                <strong>Error!</strong> <span th:text="${error}"></span>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="title">Title:</label>
+
+                                <input th:field="*{title}" id="title" type="text" class="form-control" name="title"/>
+
+                            </div>
+
+                            <div th:if="${#fields.hasErrors('content')}" class="alert message"
+                                 th:each="error: ${#fields.errors('content')}">
+                                <span class="closebtn">&times;</span>
+                                <strong>Error!</strong> <span th:text="${error}"></span>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="content">Content: </label>
+
+                                <textarea th:field="*{content}" rows="10" id="content" class="form-control" name="content"></textarea>
+
+                            </div>
+
+                            <br/><br/>
+
+                            <div th:if="${#fields.hasErrors('picture')}" class="alert message"
+                                 th:each="error: ${#fields.errors('picture')}">
+                                <span class="closebtn">&times;</span>
+                                <strong>Error!</strong> <span th:text="${error}"></span>
+                            </div>
+
+                            <span class="btn-file">
+                                <input th:field="*{picture}" id="file-1" type="file" name="picture" accept="image/*"
+                                       class="file"
+                                       data-show-upload="false"
+                                       data-show-remove="false"
+                                       data-preview-file-type="image"/>
+                            </span>
+
+                            <br/><br/>
+
+                            <button type="submit" class="btn btn-primary btn-block">Save</button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="col-lg-1"></div>
+    </div>
+
+    <hr/>
+
+    <!-- Footer -->
+    <footer style="margin: 50px 0;">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Safin Ramil 2017</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script src="" th:src="@{/js/fileinput/js/fileinput.min.js}"></script>
+<script src="" th:src="@{/css/bootstrap/js/bootstrap.min.js}"></script>
+<script src="" th:src="@{/js/tinymce/tinymce.min.js}"></script>
+<script src="" th:src="@{/js/main.js}"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        menubar: false,
+        theme: 'modern',
+        plugins: [
+            'advlist autolink lists link image charmap preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+        ],
+        toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'preview media | forecolor backcolor emoticons | codesample help',
+        image_advtab: true,
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css'
+        ]
+    });
+
+</script>
+
+</body>
+</html>
