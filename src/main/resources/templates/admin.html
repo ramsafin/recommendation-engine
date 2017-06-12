@@ -85,6 +85,7 @@
             <!-- Blog Search Well -->
             <div class="well">
                 <h4>Create blog post</h4>
+                <p th:if="${admin != null}" th:text="${admin.email}"></p>
             </div>
 
         </div>

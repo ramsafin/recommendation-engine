@@ -127,7 +127,7 @@
             <!-- Preview Image -->
             <a href="#!">
                 <img class="img-responsive" src="#"
-                     th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
+                     th:src="${post.picture}? @{/uploads/post/{path}(path=${post.picture})}
                              : @{/images/default_blog_picture.jpg}"/>
             </a>
 

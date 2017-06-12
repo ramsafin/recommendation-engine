@@ -124,6 +124,9 @@ server:
     whitelabel:
       enabled: false
 
+uploads:
+  location: /path/to/uploads
+
 ---
 
 ######## dev profile ########

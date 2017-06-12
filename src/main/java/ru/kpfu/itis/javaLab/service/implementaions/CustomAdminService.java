@@ -8,6 +8,7 @@ import ru.kpfu.itis.javaLab.model.entities.Post;
 import ru.kpfu.itis.javaLab.model.entities.User;
 import ru.kpfu.itis.javaLab.repository.spring.PostRepository;
 import ru.kpfu.itis.javaLab.service.interfaces.AdminService;
+import ru.kpfu.itis.javaLab.service.interfaces.StorageService;
 import ru.kpfu.itis.javaLab.web.forms.PostForm;
 
 import java.time.LocalDateTime;
@@ -24,9 +25,12 @@ public class CustomAdminService implements AdminService {
 
     private final PostRepository postRepository;
 
+    private final StorageService storageService;
+
     @Autowired
-    public CustomAdminService(PostRepository postRepository) {
+    public CustomAdminService(PostRepository postRepository, StorageService storageService) {
         this.postRepository = postRepository;
+        this.storageService = storageService;
     }
 
     @Override
@@ -45,8 +49,9 @@ public class CustomAdminService implements AdminService {
         post.setCreated(now);
         post.setUpdated(now);
 
-        // TODO uploadService
-//        post.setPicture();
+        String savePicture = storageService.store(form.getPicture());
+
+        post.setPicture(savePicture);
 
         return post;
     }
