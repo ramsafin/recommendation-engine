@@ -13,11 +13,9 @@
     <link href="#" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/css/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/main.css}" media="screen,projection"/>
 
-    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
-
-    <!--<link href="/css/blog-post.css" rel="stylesheet"/>-->
 </head>
 <body>
 
@@ -106,7 +104,7 @@
     <div class="col s8">
 
         <!-- Post -->
-        <article id="post" th:attr="data-post-id=${post.id}" class="col s12" th:if="${post != null}">
+        <section id="post" th:attr="data-post-id=${post.id}" class="col s12" th:if="${post != null}">
 
             <!-- Date/Time -->
             <p th:inline="text">
@@ -143,17 +141,19 @@
 
             <!-- after post -->
 
-            <p class="center">
-                    <span class="flow-text valign-wrapper">
-                        <b>Do you like this post? &nbsp;&nbsp;</b>
-                    </span>
-
-                <a id="rate-star" class="star">
-                    <i class="material-icons medium">star</i>
-                </a>
-
+            <p class="flow-text center-align">
+                <b>Do you like this post? &nbsp;&nbsp;</b>
             </p>
 
+            <br/>
+
+            <p class="center-align">
+                <a id="rate-star" class="btn btn-floating btn-large pulse yellow darken-1">
+                    <i class="material-icons" style="color: #000;">star</i>
+                </a>
+            </p>
+
+
             <hr/>
             <hr/>
 
@@ -161,7 +161,7 @@
             <br/>
             <br/>
 
-        </article>
+        </section>
 
         <!-- Comments form -->
         <div class="row">
@@ -333,43 +333,22 @@
 <script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script src="" th:src="@{/js/materialize.min.js}"></script>
 <script src="" th:src="@{/js/init.js}"></script>
-
-<script th:inline="text">
+<script src="" th:src="@{/js/comment.js}"></script>
+<script>
     $(document).ready(function () {
+       $('#rate-star').on('click', function () {
 
-        $('#comment-form').on('submit', function (e) {
+           var postId = $('#post').data('post-id');
 
-            e.preventDefault();
-
-            var comment = $('#comment');
-
-            var body = {
-                content: comment.val(),
-                postId: $('#post').data('post-id')
-            };
-
-            fetch('/blog/post/comment', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {"Content-Type": "application/json"},
-                credentials: 'include'
-            }).then(function (resp) {
-                if (resp.status !== 200) {
-                    console.log(resp);
-                    return;
-                }
-                return resp.json();
-            }).then(function (json) {
-
-                $('#comments').prepend("<div> <h5>" + json.commenterName + " <small>" + json.created + "</small>" +
-                    "</h5> " +
-                    "<blockquote>" + json.content + "</blockquote>" +
-                    "</div>");
-
-                comment.val(''); // clear comment form
-            });
-        });
-
+           fetch('/blog/post/star/' + postId, {
+               method: 'GET',
+               credentials: 'include'
+           }).then(function (resp) {
+               return resp.text();
+           }).then(function (message) {
+               console.log(message);
+           });
+       });
     });
 </script>
 

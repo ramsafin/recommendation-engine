@@ -7,6 +7,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -111,5 +112,18 @@ public class BlogController {
         User user = ((CustomUserDetails) authentication.getPrincipal()).getUser();
 
         return ResponseEntity.ok(blogService.saveComment(user, form));
+    }
+
+
+    @ResponseBody
+    @GetMapping("/blog/post/star/{postId}")
+    public ResponseEntity<?> ratePost(@PathVariable("postId") Long postId, Authentication authentication) {
+
+        User user = ((CustomUserDetails) authentication.getPrincipal()).getUser();
+
+        boolean rated = blogService.ratePost(postId, user);
+
+        return rated ? ResponseEntity.ok("Post's been successfully rated!") :
+            ResponseEntity.status(HttpStatus.CONFLICT).body("User's already rated this post");
     }
 }

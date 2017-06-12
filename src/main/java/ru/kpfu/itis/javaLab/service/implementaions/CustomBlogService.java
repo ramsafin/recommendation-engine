@@ -8,12 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.itis.javaLab.model.ajax.CommentResponseBody;
-import ru.kpfu.itis.javaLab.model.entities.Comment;
-import ru.kpfu.itis.javaLab.model.entities.Post;
-import ru.kpfu.itis.javaLab.model.entities.Tag;
-import ru.kpfu.itis.javaLab.model.entities.User;
+import ru.kpfu.itis.javaLab.model.entities.*;
 import ru.kpfu.itis.javaLab.repository.spring.CommentRepository;
 import ru.kpfu.itis.javaLab.repository.spring.PostRepository;
+import ru.kpfu.itis.javaLab.repository.spring.StarRepository;
 import ru.kpfu.itis.javaLab.repository.spring.TagRepository;
 import ru.kpfu.itis.javaLab.service.interfaces.BlogService;
 import ru.kpfu.itis.javaLab.web.forms.CommentForm;
@@ -35,15 +33,17 @@ public class CustomBlogService implements BlogService {
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
     private final CommentRepository commentRepository;
+    private final StarRepository starRepository;
 
     @Autowired
     public CustomBlogService(
         PostRepository postRepository, TagRepository tagRepository,
-        CommentRepository commentRepository
+        CommentRepository commentRepository, StarRepository starRepository
     ) {
         this.postRepository = postRepository;
         this.tagRepository = tagRepository;
         this.commentRepository = commentRepository;
+        this.starRepository = starRepository;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CustomBlogService implements BlogService {
     @Transactional
     public CommentResponseBody saveComment(User commenter, CommentForm form) {
 
-        Comment comment =commentRepository.save(fromCommentFormAndUser(form, commenter));
+        Comment comment = commentRepository.save(fromCommentFormAndUser(form, commenter));
 
         return new CommentResponseBody(comment.getCommentorName(), comment.getCreated(), comment.getContent());
     }
@@ -84,4 +84,23 @@ public class CustomBlogService implements BlogService {
         return comment;
     }
 
+    @Override
+    @Transactional
+    public boolean ratePost(Long postId, User user) {
+
+        // if exist return false
+        if (!starRepository.existsByUserIdAndPostId(user.getId(), postId)) {
+            return starRepository.save(formStar(postId, user.getId())) != null;
+        }
+
+        return false;
+    }
+
+    private Star formStar(Long postId, Long userId) {
+        Star star = new Star();
+        star.setCreated(LocalDateTime.now());
+        star.setPostId(postId);
+        star.setUserId(userId);
+        return star;
+    }
 }
