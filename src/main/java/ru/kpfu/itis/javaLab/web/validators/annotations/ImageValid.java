@@ -1,6 +1,6 @@
 package ru.kpfu.itis.javaLab.web.validators.annotations;
 
-import ru.kpfu.itis.javaLab.web.validators.PasswordsMatchValidator;
+import ru.kpfu.itis.javaLab.web.validators.ImageValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -14,11 +14,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PasswordsMatchValidator.class)
+@Constraint(validatedBy = ImageValidator.class)
 @Documented
-public @interface PasswordsMatch {
+public @interface ImageValid {
 
-    String message() default "passwords are not equal";
+    String message() default "Image type is not valid";
 
     Class<?>[] groups() default {};
 
