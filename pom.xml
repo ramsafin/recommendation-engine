@@ -36,6 +36,7 @@
 
         <!-- versions -->
         <jackson.datatype.jsr310.version>2.8.7</jackson.datatype.jsr310.version>
+        <commons-io.version>2.5</commons-io.version>
 
         <!-- override Spring Boot's Postgres jdbc driver version -->
         <postgresql.version>42.0.0</postgresql.version>
@@ -170,6 +171,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
+
+        <!-- apache commons -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
 

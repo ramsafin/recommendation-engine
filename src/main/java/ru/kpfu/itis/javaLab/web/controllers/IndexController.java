@@ -38,9 +38,4 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping(value = "/test")
-    public String show() {
-        return "index_new";
-    }
-
 }

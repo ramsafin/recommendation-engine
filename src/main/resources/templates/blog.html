@@ -27,7 +27,7 @@
 
         <div class="nav-wrapper container">
 
-            <a id="logo-container" href="#" class="brand-logo">Beauty's right behind you</a>
+            <a id="logo-container" href="#" th:href="@{/}" class="brand-logo">Beauty's right behind you</a>
 
             <ul class="right hide-on-med-and-down">
 
@@ -186,14 +186,14 @@
                     <!-- Preview Image -->
                     <a href="#" th:href="@{/blog/post/{path}(path=${post.id})}">
                         <img class="img-responsive" src="#"
-                             th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
+                             th:src="${post.picture}? @{/uploads/post/{path}(path=${post.picture})}
                              : @{/images/default_blog_picture.jpg}"/>
                     </a>
 
                     <hr/>
 
                     <!-- Post Content -->
-                    <section class="lead flow-text truncate" th:text="${post.content}"></section>
+                    <section class="lead flow-text truncate" th:utext="${post.content}"></section>
 
                     <br/>
 

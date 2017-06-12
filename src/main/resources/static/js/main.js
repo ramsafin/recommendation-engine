@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var close = $('.closebtn');
-
     var i;
     for (i = 0; i < close.length; i++) {
         close[i].onclick = function(){

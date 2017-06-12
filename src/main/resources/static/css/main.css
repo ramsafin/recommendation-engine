@@ -50,6 +50,10 @@
   background-color: #ff9800;
 }
 
+#rate-star {
+  color: #f0d724;
+}
+
 /* The close button */
 .closebtn {
   margin-left: 15px;
