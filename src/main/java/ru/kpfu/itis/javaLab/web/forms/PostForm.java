@@ -18,6 +18,8 @@ public class PostForm {
 
     private MultipartFile picture;
 
+    private String tags;
+
     public PostForm() {
 
     }
@@ -36,6 +38,10 @@ public class PostForm {
         return picture;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -46,6 +52,10 @@ public class PostForm {
 
     public void setPicture(MultipartFile picture) {
         this.picture = picture;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     @Override
