@@ -59,9 +59,10 @@ public class CustomAdminService implements AdminService {
         post.setCreated(now);
         post.setUpdated(now);
 
-        String savePicture = storageService.store(form.getPicture());
-
-        post.setPicture(savePicture);
+        if (!form.getPicture().isEmpty()) {
+            String savePicture = storageService.store(form.getPicture());
+            post.setPicture(savePicture);
+        }
 
         if (!form.getTags().trim().isEmpty()) {
             post.getTags()

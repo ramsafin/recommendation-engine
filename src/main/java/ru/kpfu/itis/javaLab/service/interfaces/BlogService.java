@@ -68,4 +68,15 @@ public interface BlogService {
      */
 
     boolean ratePost(Long postId, User user);
+
+
+    /**
+     * Get recent posts
+     *
+     * @param postsNumber - how many recent posts
+     * @return posts
+     */
+
+    List<Post> getRecentPosts(int postsNumber);
+
 }

@@ -65,6 +65,9 @@ public class BlogController {
         modelAndView.addObject("posts", postsPage.getContent());
         modelAndView.addObject("tags", blogService.getAllTags());
 
+        // recent posts
+        modelAndView.addObject("recentPosts", blogService.getRecentPosts(5));
+
         // pagination
         modelAndView.addObject("pager", new Pager(postsPage.getTotalPages(), postsPage.getNumber(), PAGE_SIZE));
         modelAndView.addObject("pageSize", PAGE_SIZE);
@@ -85,6 +88,9 @@ public class BlogController {
         modelAndView.addObject("post", post);
 
         modelAndView.addObject("tags", blogService.getAllTags());
+
+        // recent posts
+        modelAndView.addObject("recentPosts", blogService.getRecentPosts(5));
 
         if (authentication != null) {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();

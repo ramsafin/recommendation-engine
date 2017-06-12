@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.itis.javaLab.model.ajax.CommentResponseBody;
@@ -103,4 +105,13 @@ public class CustomBlogService implements BlogService {
         star.setUserId(userId);
         return star;
     }
+
+    @Override
+    @Transactional
+    public List<Post> getRecentPosts(int postsNumber) {
+
+        return getPostsByPage(new PageRequest(0, postsNumber, Sort.Direction.DESC, "updated"))
+            .getContent();
+    }
+
 }
