@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -47,9 +46,14 @@ public class BlogController {
 
 
     @GetMapping("/blog")
-    public ModelAndView showBlog(@RequestParam(defaultValue = "1") Integer page) {
+    public ModelAndView showBlog(@RequestParam(defaultValue = "1") Integer page, Authentication authentication) {
 
         ModelAndView modelAndView = new ModelAndView("blog");
+
+        if (authentication != null) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            modelAndView.addObject("user", userDetails.getUser());
+        }
 
         // find page
         Integer evalPage = page < 1 ? 0 : page - 1;
@@ -79,16 +83,18 @@ public class BlogController {
 
         modelAndView.addObject("post", post);
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        modelAndView.addObject("tags", blogService.getAllTags());
 
-        modelAndView.addObject("user", userDetails.getUser());
+        if (authentication != null) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            modelAndView.addObject("user", userDetails.getUser());
+        }
 
         return modelAndView;
     }
 
 
     @ResponseBody
-    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/blog/post/comment")
     public ResponseEntity<?> commentPost(
         @Valid @RequestBody CommentForm form,
@@ -102,7 +108,7 @@ public class BlogController {
             return ResponseEntity.badRequest().body(new ErrorResponseBody(message));
         }
 
-        User user = ((CustomUserDetails)authentication.getPrincipal()).getUser();
+        User user = ((CustomUserDetails) authentication.getPrincipal()).getUser();
 
         return ResponseEntity.ok(blogService.saveComment(user, form));
     }
