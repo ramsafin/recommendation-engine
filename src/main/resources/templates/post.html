@@ -13,11 +13,9 @@
     <link href="#" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/css/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}" media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/main.css}" media="screen,projection"/>
 
-    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/font-awesome/font-awesome.css}"/>
-
-    <!--<link href="/css/blog-post.css" rel="stylesheet"/>-->
 </head>
 <body>
 
@@ -28,7 +26,7 @@
 
         <div class="nav-wrapper container">
 
-            <a id="logo-container" href="#" class="brand-logo">Beauty's right behind you</a>
+            <a id="logo-container" href="#" th:href="@{/}" class="brand-logo">Beauty's right behind you</a>
 
             <ul class="right hide-on-med-and-down">
 
@@ -100,132 +98,107 @@
     </div>
 </div>
 
-<div>
+<div class="row post-wrap">
 
-    <div class="row post-wrap">
+    <!-- post -->
+    <div class="col s8">
 
-        <div class="col s8">
+        <!-- Post -->
+        <section id="post" th:attr="data-post-id=${post.id}" class="col s12" th:if="${post != null}">
 
-            <!-- Post -->
-            <article id="post" th:attr="data-post-id=${post.id}" class="col s12" th:if="${post != null}">
+            <!-- Date/Time -->
+            <p th:inline="text">
+                <span class="glyphicon glyphicon-calendar"></span>
+                Posted on [[${#temporals.day(post.created)}]] [[${#temporals.monthName(post.created)}]],
+                [[${#temporals.year(post.created)}]] at [[${#temporals.format(post.created, 'HH:mm')}]] |
+                <a href="#" class="comments">[[${#sets.size(post.comments)}]] comments</a>
+            </p>
 
-                <!-- Date/Time -->
-                <p th:inline="text">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                    Posted on [[${#temporals.day(post.created)}]] [[${#temporals.monthName(post.created)}]],
-                    [[${#temporals.year(post.created)}]] at [[${#temporals.format(post.created, 'HH:mm')}]] |
-                    <a href="#" class="comments">[[${#sets.size(post.comments)}]] comments</a>
-                </p>
+            <!-- Tags -->
+            <p th:if="${!#sets.isEmpty(post.tags)}">
+                <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                <span class="chip" th:each="tag: ${post.tags}" th:text="${tag.name}">tags</span>
+            </p>
 
-                <!-- Tags -->
-                <p th:if="${!#sets.isEmpty(post.tags)}">
-                    <span class="glyphicon glyphicon-tags"></span>&nbsp;
-                    <span class="chip" th:each="tag: ${post.tags}" th:text="${tag.name}">tags</span>
-                </p>
+            <div class="divider"></div>
 
-                <div class="divider"></div>
+            <h5 class="blog-post-title" th:text="${post.title}"></h5>
 
-                <h5 class="blog-post-title" th:text="${post.title}"></h5>
-
-                <!-- Preview Image -->
-                <a href="#!">
-                    <img class="img-responsive" src="#"
-                         th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
+            <!-- Preview Image -->
+            <a href="#!">
+                <img class="img-responsive" src="#"
+                     th:src="${post.picture}? @{/uploads/blog/{path}(path=${post.picture})}
                              : @{/images/default_blog_picture.jpg}"/>
+            </a>
+
+            <hr/>
+
+            <!-- Post Content -->
+            <section class="lead flow-text" th:text="${post.content}"></section>
+
+            <hr/>
+            <hr/>
+
+            <!-- after post -->
+
+            <p class="flow-text center-align">
+                <b>Do you like this post? &nbsp;&nbsp;</b>
+            </p>
+
+            <br/>
+
+            <p class="center-align">
+                <a id="rate-star" class="btn btn-floating btn-large pulse yellow darken-1">
+                    <i class="material-icons" style="color: #000;">star</i>
                 </a>
+            </p>
 
-                <hr/>
 
-                <!-- Post Content -->
-                <section class="lead flow-text" th:text="${post.content}"></section>
+            <hr/>
+            <hr/>
 
-                <hr/>
-                <hr/>
+            <br/>
+            <br/>
+            <br/>
 
-                <!-- after post -->
+        </section>
 
-                <p class="center">
-                    <span class="flow-text valign-wrapper">
-                        <b>Do you like this post? &nbsp;&nbsp;</b>
-                    </span>
+        <!-- Comments form -->
+        <div class="row">
 
-                    <a id="rate-star" class="star">
-                        <i class="material-icons medium">star</i>
-                    </a>
+            <div class="col s12">
 
-                </p>
+                <div class="well">
 
-                <hr/>
-                <hr/>
+                    <h5>Leave a comment</h5>
 
-                <br/>
-                <br/>
-                <br/>
+                    <div class="row">
 
-            </article>
+                        <form id="comment-form" method="POST" class="col s12" action="#"
+                              th:action="@{/blog/post/comment}">
 
-            <!-- Comments form -->
-            <div class="row">
+                            <div class="row">
 
-                <div class="col s12">
-
-                    <div class="well">
-
-                        <h5>Leave a comment</h5>
-
-                        <div class="row">
-
-                            <form id="comment-form" method="POST" class="col s12" action="#"
-                                  th:action="@{/blog/post/comment}">
-
-                                <div class="row">
-
-                                    <div class="input-field col s12">
+                                <div class="input-field col s12">
 
                                         <textarea id="comment" name="content" class="materialize-textarea"
                                                   data-length="1000"></textarea>
 
-                                        <label for="comment">Textarea</label>
-
-                                    </div>
-
-                                    <div class="input-field col m6 offset-m6 s12">
-                                        <button class="btn waves-effect waves-light col s12" type="submit"
-                                                name="action">
-                                            Submit<i class="material-icons right">send</i>
-                                        </button>
-                                    </div>
+                                    <label for="comment">Textarea</label>
 
                                 </div>
 
-                            </form>
+                                <div class="input-field col m6 offset-m6 s12">
+                                    <button class="btn waves-effect waves-light col s12" type="submit"
+                                            name="action">
+                                        Submit<i class="material-icons right">send</i>
+                                    </button>
+                                </div>
 
-                        </div>
+                            </div>
 
-                    </div>
+                        </form>
 
-                </div>
-
-            </div>
-
-            <!-- Comments -->
-            <div class="row">
-
-                <hr/>
-
-                <div id="comments" class="col s12" th:if="${!#sets.isEmpty(post.comments)}">
-
-                    <div th:each="comment: ${post.comments}" th:inline="text">
-                        <h5>[[${comment.commentorName}]]
-                            <small>
-                                [[${#temporals.day(comment.created)}]] [[${#temporals.monthName(comment.created)}]],
-                                [[${#temporals.year(comment.created)}]] at [[${#temporals.format(comment.created,
-                                'HH:mm')}]]
-                            </small>
-                        </h5>
-                        <blockquote th:text="${comment.content}">
-                            Winter is coming!
-                        </blockquote>
                     </div>
 
                 </div>
@@ -234,73 +207,97 @@
 
         </div>
 
-        <!-- sidebar -->
-        <div class="col s4">
+        <!-- Comments -->
+        <div class="row">
 
-            <br/>
+            <hr/>
 
-            <!-- Popular posts -->
-            <div class="well hide-on-med-and-down">
+            <div id="comments" class="col s12" th:if="${!#sets.isEmpty(post.comments)}">
 
-                <h5><a href="#"><i class="material-icons">grade</i></a> Popular posts</h5>
-
-                <div class="row">
-
-                    <div class="col s12">
-
-                        <ul class="collection">
-                            <li class="collection-item avatar">
-                                <a href="#">
-                                    <img src="/images/background3.jpg" class="circle"/>
-                                    <span class="title truncate">Ужас, все в шоке! Навальный умер! fklsdnfkdsnfn sdlkfn knfsd kln</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
+                <div th:each="comment: ${post.comments}" th:inline="text">
+                    <h5>[[${comment.commentorName}]]
+                        <small>
+                            [[${#temporals.day(comment.created)}]] [[${#temporals.monthName(comment.created)}]],
+                            [[${#temporals.year(comment.created)}]] at [[${#temporals.format(comment.created,
+                            'HH:mm')}]]
+                        </small>
+                    </h5>
+                    <blockquote th:text="${comment.content}">
+                        Winter is coming!
+                    </blockquote>
                 </div>
-            </div>
 
-            <!-- Recent posts -->
-            <div class="well hide-on-med-and-down">
-
-                <h5><a href="#"><i class="material-icons">schedule</i></a> Recent posts</h5>
-
-                <div class="row">
-
-                    <div class="col s12">
-
-                        <ul class="collection">
-                            <li class="collection-item avatar">
-                                <a href="#">
-                                    <img src="/images/background9.jpg" class="circle"/>
-                                    <span class="title truncate">Счастье! ОН выжил!</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tags -->
-            <div class="well hide-on-med-and-down">
-
-                <h5><a href="#"><i class="fa fa-tags" aria-hidden="true"></i></a> Tags</h5>
-
-                <div class="row">
-                    <div class="col s12">
-                        <div class="chip">Арсланов - человек года!</div>
-
-                    </div>
-                </div>
             </div>
 
         </div>
 
     </div>
 
+    <!-- sidebar -->
+    <div class="col s4">
+
+        <br/>
+
+        <!-- Popular posts -->
+        <div class="well hide-on-med-and-down">
+
+            <h5><a href="#"><i class="material-icons">grade</i></a> Popular posts</h5>
+
+            <div class="row">
+
+                <div class="col s12">
+
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <a href="#">
+                                <img src="/images/background3.jpg" class="circle"/>
+                                <span class="title truncate">Ужас, все в шоке! Навальный умер! fklsdnfkdsnfn sdlkfn knfsd kln</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent posts -->
+        <div class="well hide-on-med-and-down">
+
+            <h5><a href="#"><i class="material-icons">schedule</i></a> Recent posts</h5>
+
+            <div class="row">
+
+                <div class="col s12">
+
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <a href="#">
+                                <img src="/images/background9.jpg" class="circle"/>
+                                <span class="title truncate">Счастье! ОН выжил!</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="well hide-on-med-and-down">
+
+            <h5><a href="#"><i class="fa fa-tags" aria-hidden="true"></i></a> Tags</h5>
+
+            <div class="row">
+                <div class="col s12">
+                    <div th:if="${tags != null}" class="chip" th:each="tag: ${tags}" th:text="${tag.name}"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
+
 
 <!-- footer -->
 <footer class="page-footer teal">
@@ -336,43 +333,22 @@
 <script src="" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script src="" th:src="@{/js/materialize.min.js}"></script>
 <script src="" th:src="@{/js/init.js}"></script>
-
-<script th:inline="text">
+<script src="" th:src="@{/js/comment.js}"></script>
+<script>
     $(document).ready(function () {
+       $('#rate-star').on('click', function () {
 
-        $('#comment-form').on('submit', function (e) {
+           var postId = $('#post').data('post-id');
 
-            e.preventDefault();
-
-            var comment = $('#comment');
-
-            var body = {
-                content: comment.val(),
-                postId: $('#post').data('post-id')
-            };
-
-            fetch('/blog/post/comment', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {"Content-Type": "application/json"},
-                credentials: 'include'
-            }).then(function (resp) {
-                if (resp.status !== 200) {
-                    console.log(resp);
-                    return;
-                }
-                return resp.json();
-            }).then(function (json) {
-
-                $('#comments').prepend("<div> <h5>" + json.commenterName + " <small>" + json.created +"</small>" +
-                    "</h5> " +
-                    "<blockquote>" + json.content +"</blockquote>" +
-                    "</div>");
-
-                comment.val(''); // clear comment form
-            });
-        });
-
+           fetch('/blog/post/star/' + postId, {
+               method: 'GET',
+               credentials: 'include'
+           }).then(function (resp) {
+               return resp.text();
+           }).then(function (message) {
+               console.log(message);
+           });
+       });
     });
 </script>
 

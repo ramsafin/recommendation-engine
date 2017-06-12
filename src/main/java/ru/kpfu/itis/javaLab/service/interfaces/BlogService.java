@@ -57,4 +57,15 @@ public interface BlogService {
      */
 
     CommentResponseBody saveComment(User commenter, CommentForm form);
+
+
+    /**
+     * Rate the post with specified id and user
+     *
+     * @param postId - post to rate
+     * @param user   - user
+     * @return true if saved, false if user's already rated this post
+     */
+
+    boolean ratePost(Long postId, User user);
 }
