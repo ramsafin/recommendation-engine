@@ -274,6 +274,35 @@
                 </div>
             </div>
 
+            <!-- Recomended posts -->
+            <div class="well hide-on-med-and-down">
+
+                <h5><a href="#"><i class="material-icons">schedule</i></a> Recommended posts</h5>
+
+                <div class="row">
+
+                    <div class="col s12">
+
+                        <ul class="collection">
+
+                            <li th:if="${recommendedPosts != null}" class="collection-item avatar"
+                                th:each="recommendedPost: ${recommendedPosts}">
+
+                                <a href="#" th:href="@{/blog/post/{path}(path=${recommendedPost.id})}">
+
+                                    <img src="#" class="circle" th:src="${recommendedPost.picture}?
+                                    @{/uploads/post/{path}(path=${recommendedPost.picture})} : @{/images/default_blog_picture.jpg}"/>
+
+                                    <span class="title truncate" th:text="${recommendedPost.title}">Счастье! ОН выжил!</span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
             <!-- Tags -->
             <div class="well hide-on-med-and-down">
 

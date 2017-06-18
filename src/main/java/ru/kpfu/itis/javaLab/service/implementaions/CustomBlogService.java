@@ -15,6 +15,7 @@ import ru.kpfu.itis.javaLab.repository.spring.CommentRepository;
 import ru.kpfu.itis.javaLab.repository.spring.PostRepository;
 import ru.kpfu.itis.javaLab.repository.spring.StarRepository;
 import ru.kpfu.itis.javaLab.repository.spring.TagRepository;
+import ru.kpfu.itis.javaLab.repository.spring.neo4j.Neo4jPostRepository;
 import ru.kpfu.itis.javaLab.service.interfaces.BlogService;
 import ru.kpfu.itis.javaLab.web.forms.CommentForm;
 
@@ -36,16 +37,19 @@ public class CustomBlogService implements BlogService {
     private final TagRepository tagRepository;
     private final CommentRepository commentRepository;
     private final StarRepository starRepository;
+    private final Neo4jPostRepository neo4jPostRepository;
 
     @Autowired
     public CustomBlogService(
         PostRepository postRepository, TagRepository tagRepository,
-        CommentRepository commentRepository, StarRepository starRepository
+        CommentRepository commentRepository, StarRepository starRepository,
+        Neo4jPostRepository neo4jPostRepository
     ) {
-        this.postRepository = postRepository;
         this.tagRepository = tagRepository;
-        this.commentRepository = commentRepository;
         this.starRepository = starRepository;
+        this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
+        this.neo4jPostRepository = neo4jPostRepository;
     }
 
     @Override
@@ -112,6 +116,15 @@ public class CustomBlogService implements BlogService {
 
         return getPostsByPage(new PageRequest(0, postsNumber, Sort.Direction.DESC, "updated"))
             .getContent();
+    }
+
+    @Override
+    @Transactional
+    public List<Post> getRecommendedPosts(User user) {
+
+        List<Long> postIds = neo4jPostRepository.findRecommended(user.getId());
+
+        return postRepository.findByIdsIn(postIds);
     }
 
 }

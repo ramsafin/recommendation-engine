@@ -79,4 +79,5 @@ public interface BlogService {
 
     List<Post> getRecentPosts(int postsNumber);
 
+    List<Post> getRecommendedPosts(User user);
 }

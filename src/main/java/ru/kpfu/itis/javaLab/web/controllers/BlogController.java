@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kpfu.itis.javaLab.model.response.ErrorResponseBody;
 import ru.kpfu.itis.javaLab.model.entities.Post;
 import ru.kpfu.itis.javaLab.model.entities.User;
+import ru.kpfu.itis.javaLab.model.response.ErrorResponseBody;
 import ru.kpfu.itis.javaLab.security.CustomUserDetails;
 import ru.kpfu.itis.javaLab.service.interfaces.BlogService;
 import ru.kpfu.itis.javaLab.web.exceptions.PageNotFoundException;
@@ -51,10 +51,8 @@ public class BlogController {
 
         ModelAndView modelAndView = new ModelAndView("blog");
 
-        if (authentication != null) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            modelAndView.addObject("user", userDetails.getUser());
-        }
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        modelAndView.addObject("user", userDetails.getUser());
 
         // find page
         Integer evalPage = page < 1 ? 0 : page - 1;
@@ -67,6 +65,9 @@ public class BlogController {
 
         // recent posts
         modelAndView.addObject("recentPosts", blogService.getRecentPosts(5));
+
+        // recommended posts
+        modelAndView.addObject("recommendedPosts", blogService.getRecommendedPosts(userDetails.getUser()));
 
         // pagination
         modelAndView.addObject("pager", new Pager(postsPage.getTotalPages(), postsPage.getNumber(), PAGE_SIZE));
@@ -83,6 +84,9 @@ public class BlogController {
 
         ModelAndView modelAndView = new ModelAndView("post");
 
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        modelAndView.addObject("user", userDetails.getUser());
+
         Post post = blogService.getPostById(id).orElseThrow(PageNotFoundException::new);
 
         modelAndView.addObject("post", post);
@@ -92,10 +96,8 @@ public class BlogController {
         // recent posts
         modelAndView.addObject("recentPosts", blogService.getRecentPosts(5));
 
-        if (authentication != null) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            modelAndView.addObject("user", userDetails.getUser());
-        }
+        // recommended posts
+        modelAndView.addObject("recommendedPosts", blogService.getRecommendedPosts(userDetails.getUser()));
 
         return modelAndView;
     }
