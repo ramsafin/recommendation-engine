@@ -215,7 +215,7 @@
             <div id="comments" class="col s12" th:if="${!#sets.isEmpty(post.comments)}">
 
                 <div th:each="comment: ${post.comments}" th:inline="text">
-                    <h5>[[${comment.commentorName}]]
+                    <h5>[[${comment.commenterName}]]
                         <small>
                             [[${#temporals.day(comment.created)}]] [[${#temporals.monthName(comment.created)}]],
                             [[${#temporals.year(comment.created)}]] at [[${#temporals.format(comment.created,

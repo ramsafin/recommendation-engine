@@ -3,7 +3,7 @@ package ru.kpfu.itis.javaLab.service.interfaces;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.javaLab.model.ajax.CommentResponseBody;
+import ru.kpfu.itis.javaLab.model.response.CommentResponseBody;
 import ru.kpfu.itis.javaLab.model.entities.Post;
 import ru.kpfu.itis.javaLab.model.entities.Tag;
 import ru.kpfu.itis.javaLab.model.entities.User;

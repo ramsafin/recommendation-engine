@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kpfu.itis.javaLab.model.ajax.CommentResponseBody;
+import ru.kpfu.itis.javaLab.model.response.CommentResponseBody;
 import ru.kpfu.itis.javaLab.model.entities.*;
 import ru.kpfu.itis.javaLab.repository.spring.CommentRepository;
 import ru.kpfu.itis.javaLab.repository.spring.PostRepository;
@@ -72,14 +72,14 @@ public class CustomBlogService implements BlogService {
 
         Comment comment = commentRepository.save(fromCommentFormAndUser(form, commenter));
 
-        return new CommentResponseBody(comment.getCommentorName(), comment.getCreated(), comment.getContent());
+        return new CommentResponseBody(comment.getCommenterName(), comment.getCreated(), comment.getContent());
     }
 
 
     private Comment fromCommentFormAndUser(CommentForm form, User commenter) {
         Comment comment = new Comment();
         comment.setCommenterId(commenter.getId());
-        comment.setCommentorName(commenter.getEmail());
+        comment.setCommenterName(commenter.getEmail());
         comment.setContent(form.getContent());
         comment.setCreated(LocalDateTime.now());
         comment.setPostId(form.getPostId());

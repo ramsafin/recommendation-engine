@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kpfu.itis.javaLab.model.ajax.ErrorResponseBody;
+import ru.kpfu.itis.javaLab.model.response.ErrorResponseBody;
 import ru.kpfu.itis.javaLab.model.entities.Post;
 import ru.kpfu.itis.javaLab.model.entities.User;
 import ru.kpfu.itis.javaLab.security.CustomUserDetails;
