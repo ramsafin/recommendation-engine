@@ -215,7 +215,7 @@
             <div id="comments" class="col s12" th:if="${!#sets.isEmpty(post.comments)}">
 
                 <div th:each="comment: ${post.comments}" th:inline="text">
-                    <h5>[[${comment.commentorName}]]
+                    <h5>[[${comment.commenterName}]]
                         <small>
                             [[${#temporals.day(comment.created)}]] [[${#temporals.monthName(comment.created)}]],
                             [[${#temporals.year(comment.created)}]] at [[${#temporals.format(comment.created,
@@ -238,28 +238,6 @@
 
         <br/>
 
-        <!-- Popular posts -->
-        <div class="well hide-on-med-and-down">
-
-            <h5><a href="#"><i class="material-icons">grade</i></a> Popular posts</h5>
-
-            <div class="row">
-
-                <div class="col s12">
-
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <a href="#">
-                                <img src="/images/background3.jpg" class="circle"/>
-                                <span class="title truncate">Ужас, все в шоке! Навальный умер! fklsdnfkdsnfn sdlkfn knfsd kln</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-
         <!-- Recent posts -->
         <div class="well hide-on-med-and-down">
 
@@ -270,12 +248,48 @@
                 <div class="col s12">
 
                     <ul class="collection">
-                        <li class="collection-item avatar">
-                            <a href="#">
-                                <img src="/images/background9.jpg" class="circle"/>
-                                <span class="title truncate">Счастье! ОН выжил!</span>
+
+                        <li th:if="${recentPosts != null}" class="collection-item avatar"
+                            th:each="recentPost: ${recentPosts}">
+
+                            <a href="#" th:href="@{/blog/post/{path}(path=${recentPost.id})}">
+
+                                <img src="#" class="circle" th:src="${recentPost.picture}?
+                                    @{/uploads/post/{path}(path=${recentPost.picture})} : @{/images/default_blog_picture.jpg}"/>
+
+                                <span class="title truncate" th:text="${recentPost.title}">Счастье! ОН выжил!</span>
                             </a>
                         </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Recomended posts -->
+        <div class="well hide-on-med-and-down">
+
+            <h5><a href="#"><i class="material-icons">schedule</i></a> Recommended posts</h5>
+
+            <div class="row">
+
+                <div class="col s12">
+
+                    <ul class="collection">
+
+                        <li th:if="${recommendedPosts != null}" class="collection-item avatar"
+                            th:each="recommendedPost: ${recommendedPosts}">
+
+                            <a href="#" th:href="@{/blog/post/{path}(path=${recommendedPost.id})}">
+
+                                <img src="#" class="circle" th:src="${recommendedPost.picture}?
+                                    @{/uploads/post/{path}(path=${recommendedPost.picture})} : @{/images/default_blog_picture.jpg}"/>
+
+                                <span class="title truncate" th:text="${recommendedPost.title}">Счастье! ОН выжил!</span>
+                            </a>
+                        </li>
+
                     </ul>
 
                 </div>

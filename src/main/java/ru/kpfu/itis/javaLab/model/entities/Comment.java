@@ -26,7 +26,7 @@ public class Comment implements Serializable {
     private Post post;
     private Long postId;
 
-    private String commentorName;
+    private String commenterName;
 
     public Comment() {
 
@@ -70,9 +70,9 @@ public class Comment implements Serializable {
         return postId;
     }
 
-    @Column(name = "commentor_name")
-    public String getCommentorName() {
-        return commentorName;
+    @Column(name = "commenter_name")
+    public String getCommenterName() {
+        return commenterName;
     }
 
     public void setId(Long id) {
@@ -103,8 +103,8 @@ public class Comment implements Serializable {
         this.postId = postId;
     }
 
-    public void setCommentorName(String commentorName) {
-        this.commentorName = commentorName;
+    public void setCommenterName(String commenterName) {
+        this.commenterName = commenterName;
     }
 
     @Override

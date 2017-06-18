@@ -86,6 +86,9 @@
             <div class="well">
                 <h4>Create blog post</h4>
                 <p th:if="${admin != null}" th:text="${admin.email}"></p>
+                <p th:inline="text">
+                    <b>Online users:</b> [[${#httpSession.getServletContext().getAttribute('visitors')}]]
+                </p>
             </div>
 
         </div>
@@ -102,7 +105,7 @@
 
                 <div class="panel panel-primary">
 
-                    <div class="panel-heading">Write your post</div>
+                    <div class="panel-heading">Write your post, admin</div>
 
                     <div class="panel-body">
 
@@ -153,6 +156,13 @@
                                        data-show-remove="false"
                                        data-preview-file-type="image"/>
                             </span>
+
+                            <br/><br/>
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                                <input th:field="*{tags}" id="tags" type="text" class="form-control" name="tags" placeholder="tag, tag2"/>
+                            </div>
 
                             <br/><br/>
 

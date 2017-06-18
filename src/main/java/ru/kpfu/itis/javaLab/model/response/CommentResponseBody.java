@@ -1,4 +1,4 @@
-package ru.kpfu.itis.javaLab.model.ajax;
+package ru.kpfu.itis.javaLab.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
